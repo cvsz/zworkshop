@@ -17,6 +17,8 @@ on:
       - 'ROADMAP.md'
       - 'SECURITY.md'
       - 'docs/**'
+      - 'docs/tutorial.md'
+      - 'examples/**'
       - '.github/**'
       - '.github/workflows/workshop-smoke.yml'
   pull_request:
@@ -33,6 +35,8 @@ on:
       - 'ROADMAP.md'
       - 'SECURITY.md'
       - 'docs/**'
+      - 'docs/tutorial.md'
+      - 'examples/**'
       - '.github/**'
       - '.github/workflows/workshop-smoke.yml'
 

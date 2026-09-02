@@ -21,6 +21,7 @@ A production-ready, reusable GitHub repository template with a root-native Ubunt
 - EditorConfig, Git attributes, and Git ignore baseline
 - Community health files
 - Documentation structure
+- Complete Ubuntu Workshop tutorial guide and definition-first fixtures
 - Changelog and roadmap templates
 - Implementation checklist
 - Architecture Decision Record (ADR) template
@@ -55,11 +56,18 @@ docs/
   architecture.md
   development.md
   release.md
+  tutorial.md
+examples/
+  tutorial/
+    README.md
+    ollama-python-project/
+    ollama-sdk/
 ci/
   workshop-smoke.sh
 tests/
   test-documentation-contract.sh
   test-root-workshop-layout.sh
+  test-tutorial-fixtures.sh
   test-workshop-automated-installer.sh
 .env.example
 .editorconfig
@@ -81,14 +89,18 @@ workshop-automated-installer.sh
 
 `workshop-automated-installer.sh` is the repository-root Bash wrapper for the
 Ubuntu Workshop workflow. It installs or refreshes the LXD prerequisite and
-Workshop snap, initializes projects, and routes Workshop lifecycle, execution,
-interface, SDK, and sketch operations through one command.
+Workshop snap, initializes projects, routes Workshop lifecycle, execution,
+interface, SDK, and sketch operations through one command, and provides
+explicit SDKcraft installation and refresh commands.
 
 The wrapper follows the current [Ubuntu Workshop tutorial](https://ubuntu.com/workshop/docs/tutorial/part-1-get-started/): LXD `6/stable`, classic Workshop installation, `workshop init NAME --sdks ... --base ...`, `workshop exec NAME -- ...`, and `workshop run NAME -- ...`. Its default base is `ubuntu@24.04`; pass `--base ubuntu@22.04` when following the tutorial's initial example exactly.
 
-The wrapper delegates stateful operations to the native Workshop CLI. It does
-not run `lxd init`, select storage or networking, overwrite an existing
-`.workshop/<name>.yaml`, or remove host data implicitly.
+The wrapper delegates stateful operations to the native Workshop CLI and runs
+SDKcraft passthrough commands from the selected `--project-dir`. It does not
+run `lxd init`, select storage or networking, overwrite an existing
+`.workshop/<name>.yaml`, or remove host data implicitly. Read the complete
+[tutorial integration guide](docs/tutorial.md) and inspect the
+[definition-first fixtures](examples/tutorial/) for the four tutorial parts.
 
 ### Install and bootstrap
 
@@ -134,7 +146,7 @@ performs `install`.
 | Status | `list`, `status`, `info`, `actions`, `changes`, `tasks`, `warnings`, `okay` |
 | Execution | `exec`, `shell`, `run`, `ollama`, `pull-model` |
 | Interfaces | `connections`, `connect`, `disconnect`, `remount` |
-| SDKs | `sdk`, `sdk-find`, `sdk-info`, `sdk-list`, `sdkcraft` |
+| SDKs | `sdk`, `sdk-find`, `sdk-info`, `sdk-list`, `sdkcraft`, `sdkcraft-install`, `sdkcraft-refresh` |
 | Sketches | `sketch-sdk`, `sketches`, `sketch-stash`, `sketch-restore`, `sketch-remove`, `sketch-eject` |
 | Integration | `doctor`, `completion`, `ci` |
 | Passthrough | `native`, `workshop`, `workshopctl`, `version` |
@@ -150,6 +162,8 @@ Examples:
 ./workshop-automated-installer.sh --project-dir ./project connections --all
 ./workshop-automated-installer.sh --project-dir ./project connect dev/ollama:models :mount
 ./workshop-automated-installer.sh --project-dir ./project sdk-find ollama
+./workshop-automated-installer.sh sdkcraft-install
+./workshop-automated-installer.sh --project-dir ./sdk-source sdkcraft test
 ./workshop-automated-installer.sh --project-dir ./project sketch-sdk
 ./workshop-automated-installer.sh --project-dir ./project native launch dev --wait-on-error
 ```
@@ -197,6 +211,10 @@ bash ci/workshop-smoke.sh
 - Existing Workshop definitions are never overwritten.
 - Bootstrap does not download a model unless `--model` is supplied.
 - Host mounts, GPU, networking, and interface changes require explicit commands.
+- SDKcraft login, registration, upload, and release promotion remain explicit
+  operator actions; `install` never installs SDKcraft implicitly.
+- Tutorial fixtures contain no credentials, `.workshop.lock`, model cache, or
+  packed `.sdk` artifact, and CI validates them without live Workshop effects.
 - Tests use fake commands and temporary directories; they do not mutate the host's snap or LXD state.
 
 ## Principles

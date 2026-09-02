@@ -21,11 +21,15 @@ Before publishing a change to the root Workshop automation, run:
 ```bash
 make workshop-test
 make workshop-smoke
+bash tests/test-tutorial-fixtures.sh
 ```
 
 Confirm that the smoke checks use only temporary fake commands, that no
-`.workshop.lock` runtime file is staged, and that any live snap/LXD operation
-was performed separately with explicit operator approval.
+`.workshop.lock` runtime file, packed `.sdk` artifact, model cache, or
+credential is staged, and that any live snap/LXD/SDKcraft operation was
+performed separately with explicit operator approval. Review the tutorial
+fixture changes under `examples/tutorial/` and keep `docs/tutorial.md` aligned
+with the four upstream tutorial parts.
 
 ## GitHub publication
 
@@ -38,7 +42,8 @@ release notes.
 The repository's validation workflows currently use `actions/checkout@v7`,
 `github/codeql-action@v4`, and `actions/dependency-review-action@v5`. Confirm
 hosted CI and security workflows are green for the exact release commit before
-tagging or publishing artifacts.
+tagging or publishing artifacts. A green fixture test is static evidence only;
+it does not replace live Workshop, SDKcraft, LXD, or SDK Store validation.
 
 ## Rollback
 

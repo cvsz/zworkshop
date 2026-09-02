@@ -90,7 +90,7 @@ Execution and interfaces:
   connections connect disconnect remount
 
 SDKs, sketches, and passthrough:
-  sdk sdk-find sdk-info sdk-list sdkcraft sketch-sdk sketches
+  sdk sdk-find sdk-info sdk-list sdkcraft sdkcraft-install sdkcraft-refresh sketch-sdk sketches
   sketch-stash sketch-restore sketch-remove sketch-eject
   native workshop workshopctl version
 
@@ -544,6 +544,20 @@ install_or_refresh_workshop() {
     fi
 }
 
+install_or_refresh_sdkcraft() {
+    if ((DRY_RUN)); then
+        log "Would install SDKcraft in classic mode if absent, otherwise refresh it."
+        run_command "${PRIVILEGE_PREFIX[@]}" snap install --classic sdkcraft
+        run_command "${PRIVILEGE_PREFIX[@]}" snap refresh sdkcraft
+    elif snap_is_installed sdkcraft; then
+        log "Refreshing SDKcraft."
+        snap_call refresh sdkcraft
+    else
+        log "Installing SDKcraft in classic mode."
+        snap_call install --classic sdkcraft
+    fi
+}
+
 ensure_lxd_service() {
     log "Ensuring the LXD snap service is running."
     snap_call start lxd
@@ -601,6 +615,23 @@ cmd_install() {
     if ((DRY_RUN == 0)); then
         verify_installation
         log "Workshop installation completed successfully."
+    fi
+}
+
+cmd_sdkcraft_install() {
+    (($# == 0)) || die "sdkcraft-install does not accept positional arguments."
+    configure_privileges
+    install_or_refresh_sdkcraft
+}
+
+cmd_sdkcraft_refresh() {
+    (($# == 0)) || die "sdkcraft-refresh does not accept positional arguments."
+    configure_privileges
+    if ((DRY_RUN)); then
+        run_command "${PRIVILEGE_PREFIX[@]}" snap refresh sdkcraft
+    else
+        log "Refreshing SDKcraft."
+        snap_call refresh sdkcraft
     fi
 }
 
@@ -688,6 +719,38 @@ run_tool() {
         return "$status"
     fi
     "$tool_executable" "$@"
+}
+
+run_project_tool() {
+    local tool_name=$1
+    shift
+    local tool_executable
+    local output
+    local status
+
+    require_project
+    if ((DRY_RUN)); then
+        if ((JSON_OUTPUT)); then
+            output="$(print_project_plan "$tool_name" "$@")"
+            emit_json_result "$tool_name" 0 "$output"
+        else
+            print_project_plan "$tool_name" "$@"
+        fi
+        return 0
+    fi
+
+    tool_executable="$(resolve_executable "$tool_name")" \
+        || die "Required command not found: ${tool_name}"
+    if ((JSON_OUTPUT)); then
+        if output="$(cd -- "$PROJECT_DIR" && "$tool_executable" "$@" 2>&1)"; then
+            status=0
+        else
+            status=$?
+        fi
+        emit_json_result "$tool_name" "$status" "$output"
+        return "$status"
+    fi
+    (cd -- "$PROJECT_DIR" && "$tool_executable" "$@")
 }
 
 prepare_project_for_init() {
@@ -1010,7 +1073,7 @@ completion_bash() {
     cat <<'EOF'
 _uws_workshop_complete() {
     local current="${COMP_WORDS[COMP_CWORD]}"
-    local commands="install init bootstrap launch refresh start stop restore remove list status info actions changes tasks warnings okay exec shell run ollama pull-model connections connect disconnect remount sdk sdk-find sdk-info sdk-list sdkcraft sketch-sdk sketches sketch-stash sketch-restore sketch-remove sketch-eject native workshop workshopctl version doctor completion ci"
+    local commands="install init bootstrap launch refresh start stop restore remove list status info actions changes tasks warnings okay exec shell run ollama pull-model connections connect disconnect remount sdk sdk-find sdk-info sdk-list sdkcraft sdkcraft-install sdkcraft-refresh sketch-sdk sketches sketch-stash sketch-restore sketch-remove sketch-eject native workshop workshopctl version doctor completion ci"
     if [[ ${COMP_CWORD} -eq 1 ]]; then
         COMPREPLY=( $(compgen -W "$commands" -- "$current") )
     fi
@@ -1024,7 +1087,7 @@ completion_zsh() {
 #compdef workshop-automated-installer.sh
 _uws_workshop_complete() {
     local -a commands
-    commands=(install init bootstrap launch refresh start stop restore remove list status info actions changes tasks warnings okay exec shell run ollama pull-model connections connect disconnect remount sdk sdk-find sdk-info sdk-list sdkcraft sketch-sdk sketches sketch-stash sketch-restore sketch-remove sketch-eject native workshop workshopctl version doctor completion ci)
+    commands=(install init bootstrap launch refresh start stop restore remove list status info actions changes tasks warnings okay exec shell run ollama pull-model connections connect disconnect remount sdk sdk-find sdk-info sdk-list sdkcraft sdkcraft-install sdkcraft-refresh sketch-sdk sketches sketch-stash sketch-restore sketch-remove sketch-eject native workshop workshopctl version doctor completion ci)
     _describe 'command' commands
 }
 compdef _uws_workshop_complete workshop-automated-installer.sh
@@ -1033,7 +1096,7 @@ EOF
 
 completion_fish() {
     cat <<'EOF'
-set -l uws_commands install init bootstrap launch refresh start stop restore remove list status info actions changes tasks warnings okay exec shell run ollama pull-model connections connect disconnect remount sdk sdk-find sdk-info sdk-list sdkcraft sketch-sdk sketches sketch-stash sketch-restore sketch-remove sketch-eject native workshop workshopctl version doctor completion ci
+set -l uws_commands install init bootstrap launch refresh start stop restore remove list status info actions changes tasks warnings okay exec shell run ollama pull-model connections connect disconnect remount sdk sdk-find sdk-info sdk-list sdkcraft sdkcraft-install sdkcraft-refresh sketch-sdk sketches sketch-stash sketch-restore sketch-remove sketch-eject native workshop workshopctl version doctor completion ci
 complete -c workshop-automated-installer.sh -f -n '__fish_use_subcommand' -a "$uws_commands"
 EOF
 }
@@ -1042,7 +1105,7 @@ completion_powershell() {
     cat <<'EOF'
 Register-ArgumentCompleter -CommandName workshop-automated-installer.sh -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
-    $commands = 'install','init','bootstrap','launch','refresh','start','stop','restore','remove','list','status','info','actions','changes','tasks','warnings','okay','exec','shell','run','ollama','pull-model','connections','connect','disconnect','remount','sdk','sdk-find','sdk-info','sdk-list','sdkcraft','sketch-sdk','sketches','sketch-stash','sketch-restore','sketch-remove','sketch-eject','native','workshop','workshopctl','version','doctor','completion','ci'
+    $commands = 'install','init','bootstrap','launch','refresh','start','stop','restore','remove','list','status','info','actions','changes','tasks','warnings','okay','exec','shell','run','ollama','pull-model','connections','connect','disconnect','remount','sdk','sdk-find','sdk-info','sdk-list','sdkcraft','sdkcraft-install','sdkcraft-refresh','sketch-sdk','sketches','sketch-stash','sketch-restore','sketch-remove','sketch-eject','native','workshop','workshopctl','version','doctor','completion','ci'
     $commands | Where-Object { $_ -like "$wordToComplete*" } | ForEach-Object {
         [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
     }
@@ -1068,6 +1131,7 @@ cmd_ci() {
         "$SCRIPT_PATH"
         "$SCRIPT_DIR/tests/test-root-workshop-layout.sh"
         "$SCRIPT_DIR/tests/test-documentation-contract.sh"
+        "$SCRIPT_DIR/tests/test-tutorial-fixtures.sh"
         "$SCRIPT_DIR/tests/test-workshop-automated-installer.sh"
         "$SCRIPT_DIR/ci/workshop-smoke.sh"
     )
@@ -1092,6 +1156,9 @@ cmd_ci() {
     fi
     if [[ -f "$SCRIPT_DIR/tests/test-documentation-contract.sh" ]]; then
         bash "$SCRIPT_DIR/tests/test-documentation-contract.sh"
+    fi
+    if [[ -f "$SCRIPT_DIR/tests/test-tutorial-fixtures.sh" ]]; then
+        bash "$SCRIPT_DIR/tests/test-tutorial-fixtures.sh"
     fi
     if [[ -f "$SCRIPT_DIR/tests/test-workshop-automated-installer.sh" ]]; then
         bash "$SCRIPT_DIR/tests/test-workshop-automated-installer.sh"
@@ -1125,7 +1192,9 @@ dispatch() {
         sdk-find) run_tool sdk find "${COMMAND_ARGS[@]}" ;;
         sdk-info) run_tool sdk info "${COMMAND_ARGS[@]}" ;;
         sdk-list) run_tool sdk list "${COMMAND_ARGS[@]}" ;;
-        sdkcraft) run_tool sdkcraft "${COMMAND_ARGS[@]}" ;;
+        sdkcraft) run_project_tool sdkcraft "${COMMAND_ARGS[@]}" ;;
+        sdkcraft-install) cmd_sdkcraft_install "${COMMAND_ARGS[@]}" ;;
+        sdkcraft-refresh) cmd_sdkcraft_refresh "${COMMAND_ARGS[@]}" ;;
         native|workshop) cmd_native "${COMMAND_ARGS[@]}" ;;
         workshopctl) run_tool workshopctl "${COMMAND_ARGS[@]}" ;;
         version) run_tool workshop --version "${COMMAND_ARGS[@]}" ;;

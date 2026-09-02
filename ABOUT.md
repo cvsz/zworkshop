@@ -88,14 +88,19 @@ Security and quality checks should be fixed rather than bypassed. Infrastructure
 This repository includes a root-native `workshop-automated-installer.sh` for
 Ubuntu Workshop. The wrapper covers installation, project initialization,
 Workshop lifecycle and execution, interfaces, SDKs, sketches, diagnostics,
-completion, JSON output, and non-mutating CI checks.
+completion, JSON output, SDKcraft installation/refresh, project-aware SDKcraft
+passthrough, and non-mutating CI checks. The complete four-part tutorial map is
+in `docs/tutorial.md`, with definition-first examples under
+`examples/tutorial/`.
 
 The repository keeps the Workshop boundary explicit: `--dry-run` and `--plan`
 do not mutate the host, `lxd init` is never run automatically, destructive
 operations require confirmation, `.workshop.lock` is ignored, and `.workshop/`
 definitions remain available for version control. Local and GitHub checks use
 fake commands and temporary directories instead of installing or starting
-snap/LXD services.
+snap/LXD services. The tutorial fixtures contain no credentials, packed SDK
+artifacts, model caches, or runtime locks; SDK Store login, registration, and
+upload remain explicit operator actions.
 
 ## Public project themes
 

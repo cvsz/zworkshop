@@ -9,8 +9,15 @@ The format is based on Keep a Changelog and projects are encouraged to follow Se
 ### Added
 
 - README status badges for CI, Workshop smoke, CodeQL, and the latest release.
+- Complete four-part Ubuntu Workshop tutorial guide and definition-first
+  fixtures for the Workshop, in-project SDK, and SDKcraft workflows.
+- Explicit `sdkcraft-install` and `sdkcraft-refresh` wrapper commands plus
+  project-directory routing for SDKcraft passthrough.
 
 ### Changed
+
+- Added tutorial fixture validation to the Makefile, CI baseline, and
+  non-mutating Workshop smoke workflow.
 
 ### Fixed
 

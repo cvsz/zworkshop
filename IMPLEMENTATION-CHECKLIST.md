@@ -21,6 +21,10 @@ Use this checklist after creating a repository from `zworkshop`.
 
 - [x] Root `workshop-automated-installer.sh` is executable and documented.
 - [x] Root fake-backend tests and non-mutating smoke checks are available.
+- [x] Four-part Ubuntu Workshop tutorial guide and definition-first fixtures are
+  checked in and statically validated.
+- [x] SDKcraft installation/refresh and project-directory passthrough are
+  covered by fake-command tests.
 - [x] `.workshop.lock` is ignored while `.workshop/` definitions remain trackable.
 - [x] Workshop smoke workflow is integrated into GitHub Actions.
 - [x] GitHub Actions use current checkout, CodeQL, and dependency-review majors.
@@ -70,6 +74,8 @@ Use this checklist after creating a repository from `zworkshop`.
 - [ ] Complete `docs/development.md`.
 - [ ] Complete `docs/release.md`.
 - [x] Document Workshop development and release gates.
+- [x] Document all four tutorial parts, fixture boundaries, and SDKcraft
+  publication as an explicit operator action.
 - [ ] Add ADRs for material architectural decisions.
 - [ ] Document operational ownership and support expectations.
 
@@ -77,6 +83,7 @@ Use this checklist after creating a repository from `zworkshop`.
 
 - [ ] Fresh clone works with documented bootstrap steps.
 - [x] Root layout and fake-backend Workshop checks pass locally.
+- [x] Tutorial fixture contract passes locally.
 - [ ] CI passes on `main` and pull requests.
 - [ ] No secrets or private information are committed.
 - [ ] Security checks are enabled and passing.

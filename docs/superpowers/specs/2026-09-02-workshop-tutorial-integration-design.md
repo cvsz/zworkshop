@@ -1,6 +1,6 @@
 # Ubuntu Workshop Tutorial Integration Design
 
-**Status:** Approved design, ready for implementation (2026-09-02)
+**Status:** Implementation complete; local verification passed; hosted verification pending (2026-09-02)
 
 ## Goal
 

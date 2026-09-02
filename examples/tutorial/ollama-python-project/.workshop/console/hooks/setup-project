@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+source /var/lib/workshop/sdk/jupyter/venv/bin/activate
+pip install jupyter-console

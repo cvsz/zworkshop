@@ -14,6 +14,8 @@ This template stays reusable while providing production-grade repository foundat
 - [x] Architecture and development documentation structure
 - [x] Root Ubuntu Workshop automation, installer, and non-mutating smoke checks
 - [x] Project and GitHub documentation for Workshop operation
+- [x] Complete four-part Ubuntu Workshop tutorial integration and fixtures
+- [x] Explicit SDKcraft installation/refresh and project-aware passthrough
 - [x] Current GitHub Actions major versions
 
 ## Future optional modules

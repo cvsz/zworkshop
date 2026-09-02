@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+sdk_dir="${SDK:?SDK path is required}"
+cat > /etc/profile.d/ollama.sh <<EOF
+export PATH="$sdk_dir/bin:\$PATH"
+EOF

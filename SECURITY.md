@@ -40,6 +40,16 @@ The root Workshop wrapper is intentionally an operator-controlled boundary:
 - GPU, mounts, networking, and other interfaces are exposed only through
   explicit commands. CI uses fake executables and temporary directories and
   does not mutate host snap/LXD state.
+- `sdkcraft-install` and `sdkcraft-refresh` are explicit host operations;
+  `install` does not install SDKcraft as a side effect. SDKcraft project
+  commands run from the selected `--project-dir`, but `try` and `test` may
+  build artifacts or provision LXD and must be run only on an approved host.
+- SDK Store `login`, `register`, and `upload` are never automated. Do not put
+  their credentials, tokens, packed `.sdk` files, model caches, or release
+  state in `examples/tutorial/`.
+- The tutorial fixture test scans definitions and hooks for credentials,
+  runtime locks, packed artifacts, automatic `lxd init`, and publication
+  commands. It is a repository-content check, not proof of runtime security.
 
 The GitHub workflows use read-only repository permissions for validation and
 security jobs. Third-party action versions are reviewed and currently use

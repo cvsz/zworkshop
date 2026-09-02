@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+sdk_dir="${SDK:?SDK path is required}"
+install -D --mode=0644 --target-directory "$HOME/.config/systemd/user" \
+    "$sdk_dir/ollama.service"
+systemctl --user daemon-reload
+systemctl --user enable --now ollama

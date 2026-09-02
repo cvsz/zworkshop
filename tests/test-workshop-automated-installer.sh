@@ -29,6 +29,8 @@ bash -n "$INSTALLER" || fail "installer has invalid Bash syntax"
 help_output="$(bash "$INSTALLER" --help)"
 assert_contains "bootstrap" "$help_output" "help lists bootstrap"
 assert_contains "completion" "$help_output" "help lists completion"
+assert_contains "sdkcraft-install" "$help_output" "help lists SDKcraft installation"
+assert_contains "sdkcraft-refresh" "$help_output" "help lists SDKcraft refresh"
 
 dry_project="$(mktemp -d)"
 dry_output="$(bash "$INSTALLER" --dry-run --project-dir "$dry_project" init 2>&1)"
@@ -152,7 +154,7 @@ EOF
 cat >"$fake_bin/sdkcraft" <<'EOF'
 #!/usr/bin/env bash
 set -Eeuo pipefail
-printf 'sdkcraft %s\n' "$*" >>"${UWS_TEST_LOG:?}"
+printf 'sdkcraft cwd=%s %s\n' "$PWD" "$*" >>"${UWS_TEST_LOG:?}"
 printf 'sdkcraft-ok\n'
 EOF
 
@@ -171,10 +173,29 @@ export UWS_TEST_STATE="$fake_state"
 bash "$INSTALLER" install >/dev/null || fail "fresh install path failed"
 assert_file_contains "snap install --channel=6/stable lxd" "$log_file" "fresh LXD install"
 assert_file_contains "snap install --classic workshop" "$log_file" "fresh Workshop install"
+if grep -Fq 'sdkcraft' "$log_file"; then
+    fail "install unexpectedly touched SDKcraft"
+fi
 
 bash "$INSTALLER" install >/dev/null || fail "refresh path failed"
 assert_file_contains "snap refresh --channel=6/stable lxd" "$log_file" "existing LXD refresh"
 assert_file_contains "snap refresh workshop" "$log_file" "existing Workshop refresh"
+
+bash "$INSTALLER" sdkcraft-install >/dev/null || fail "SDKcraft install failed"
+assert_file_contains "snap install --classic sdkcraft" "$log_file" "SDKcraft install"
+
+bash "$INSTALLER" sdkcraft-refresh >/dev/null || fail "SDKcraft refresh failed"
+assert_file_contains "snap refresh sdkcraft" "$log_file" "SDKcraft refresh"
+
+sdkcraft_project="$test_root/sdkcraft-project"
+mkdir -p "$sdkcraft_project"
+bash "$INSTALLER" --project-dir "$sdkcraft_project" sdkcraft init >/dev/null \
+    || fail "project SDKcraft dispatch failed"
+assert_file_contains "sdkcraft cwd=$sdkcraft_project init" "$log_file" \
+    "SDKcraft project working directory"
+sdkcraft_plan="$(bash "$INSTALLER" --dry-run --project-dir "$sdkcraft_project" sdkcraft try 2>&1)"
+assert_contains "(cd -- $sdkcraft_project && sdkcraft try)" "$sdkcraft_plan" \
+    "SDKcraft dry-run project plan"
 
 bash "$INSTALLER" \
     --project-dir "$project_dir" \
@@ -236,6 +257,20 @@ bash "$INSTALLER" --yes --project-dir "$project_dir" --workshop dev remove >/dev
 
 completion_output="$(bash "$INSTALLER" completion bash)"
 assert_contains 'complete -F' "$completion_output" "Bash completion"
+assert_contains 'sdkcraft-install' "$completion_output" "Bash SDKcraft completion"
+assert_contains 'sdkcraft-refresh' "$completion_output" "Bash SDKcraft refresh completion"
+
+completion_output="$(bash "$INSTALLER" completion zsh)"
+assert_contains 'sdkcraft-install' "$completion_output" "Zsh SDKcraft completion"
+assert_contains 'sdkcraft-refresh' "$completion_output" "Zsh SDKcraft refresh completion"
+
+completion_output="$(bash "$INSTALLER" completion fish)"
+assert_contains 'sdkcraft-install' "$completion_output" "Fish SDKcraft completion"
+assert_contains 'sdkcraft-refresh' "$completion_output" "Fish SDKcraft refresh completion"
+
+completion_output="$(bash "$INSTALLER" completion powershell)"
+assert_contains 'sdkcraft-install' "$completion_output" "PowerShell SDKcraft completion"
+assert_contains 'sdkcraft-refresh' "$completion_output" "PowerShell SDKcraft refresh completion"
 
 doctor_output="$(bash "$INSTALLER" --json --project-dir "$project_dir" doctor)"
 assert_contains '"command":"doctor"' "$doctor_output" "JSON doctor command"

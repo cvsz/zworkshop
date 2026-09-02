@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+if ! output=$(sudo -u workshop --login ollama list 2>&1); then
+    workshopctl set-health error "$output"
+    exit 1
+fi
+
+workshopctl set-health okay

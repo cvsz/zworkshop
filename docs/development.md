@@ -25,14 +25,42 @@ make workshop-test
 make workshop-smoke
 ```
 
-`make test` includes the root layout, documentation contract, and fake-backend
-Workshop tests. `make ci` also runs the repository's placeholder format/build/
-security gates until a generated project replaces them with stack-specific
-commands.
+`make workshop-test` includes the root layout, documentation contract, tutorial
+fixture contract, and fake-backend Workshop tests. `make ci` also runs the
+repository's placeholder format/build/security gates until a generated project
+replaces them with stack-specific commands.
 
-The tests use temporary fake `snap`, `lxd`, `workshop`, SDK, and privilege
-commands. They do not install snaps, start LXD, or create a real Workshop
-definition in this repository.
+The tests use temporary fake `snap`, `lxd`, `workshop`, SDK, SDKcraft, and
+privilege commands. They do not install snaps, start LXD, create a real
+Workshop, query the SDK Store, build an SDK, or publish anything.
+
+## Tutorial fixtures
+
+The complete tutorial map is in [`docs/tutorial.md`](tutorial.md). The
+definition-first examples are under [`examples/tutorial/`](../examples/tutorial/)
+and are checked by `tests/test-tutorial-fixtures.sh`:
+
+```bash
+bash tests/test-tutorial-fixtures.sh
+```
+
+The wrapper's SDKcraft boundary is intentionally explicit:
+
+```bash
+./workshop-automated-installer.sh sdkcraft-install
+./workshop-automated-installer.sh sdkcraft-refresh
+./workshop-automated-installer.sh \
+  --project-dir examples/tutorial/ollama-sdk sdkcraft clean
+./workshop-automated-installer.sh \
+  --project-dir examples/tutorial/ollama-sdk sdkcraft try
+./workshop-automated-installer.sh \
+  --project-dir examples/tutorial/ollama-sdk sdkcraft test
+```
+
+The first two commands affect the host's SDKcraft snap. The project commands
+may create build output, LXD containers, or runtime state and therefore belong
+to an approved operator environment, not CI. `sdkcraft login`, `register`, and
+`upload` are documented but never run automatically.
 
 ## Quality expectations
 

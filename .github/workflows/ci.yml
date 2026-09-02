@@ -32,11 +32,23 @@ jobs:
             CHANGELOG.md
             ROADMAP.md
             IMPLEMENTATION-CHECKLIST.md
+            docs/tutorial.md
+            examples/tutorial/README.md
+            examples/tutorial/ollama-python-project/.workshop/dev.yaml
+            examples/tutorial/ollama-python-project/.workshop/console/sdk.yaml
+            examples/tutorial/ollama-python-project/.workshop/console/hooks/setup-project
+            examples/tutorial/ollama-sdk/sdkcraft.yaml
+            examples/tutorial/ollama-sdk/ollama.service
+            examples/tutorial/ollama-sdk/hooks/setup-base
+            examples/tutorial/ollama-sdk/hooks/setup-project
+            examples/tutorial/ollama-sdk/hooks/check-health
+            examples/tutorial/ollama-sdk/tests/README.md
             .github/PULL_REQUEST_TEMPLATE.md
             .github/dependabot.yml
             workshop-automated-installer.sh
             tests/test-root-workshop-layout.sh
             tests/test-documentation-contract.sh
+            tests/test-tutorial-fixtures.sh
             tests/test-workshop-automated-installer.sh
             ci/workshop-smoke.sh
             .github/workflows/workshop-smoke.yml
@@ -58,6 +70,7 @@ jobs:
         shell: bash
         run: |
           ruby -e 'require "yaml"; Dir.glob(".github/**/*.{yml,yaml}").each { |f| YAML.load_file(f); puts "ok #{f}" }'
+          ruby -e 'require "yaml"; Dir.glob("examples/tutorial/**/*.yaml").each { |f| YAML.load_file(f); puts "ok #{f}" }'
 
       - name: Run Workshop wrapper smoke checks
         shell: bash

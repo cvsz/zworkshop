@@ -22,7 +22,16 @@ make workshop-smoke
 
 Use `./workshop-automated-installer.sh --dry-run ...` when reviewing installer
 arguments. Do not use the test harness to install snaps, initialize LXD, or
-create runtime state in the repository.
+create runtime state in the repository. For the complete tutorial integration,
+also review `docs/tutorial.md` and run the static fixture contract:
+
+```bash
+bash tests/test-tutorial-fixtures.sh
+```
+
+SDKcraft `try` and `test` are live operator workflows and may create build
+artifacts or LXD containers. SDK Store `login`, `register`, and `upload` must
+remain explicit and must never be added to CI.
 
 ## Branch naming
 

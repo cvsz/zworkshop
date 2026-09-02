@@ -19,6 +19,7 @@ coverage/
 .next/
 .nuxt/
 .out/
+*.sdk
 
 # Tool caches
 .cache/
@@ -50,3 +51,4 @@ tmp/
 
 # Ubuntu Workshop runtime state
 .workshop.lock
+.ollama/

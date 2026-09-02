@@ -1,0 +1,18 @@
+name: dev
+base: ubuntu@24.04
+sdks:
+  - name: ollama
+    channel: vulkan/stable
+  - name: uv
+  - name: jupyter
+  - name: project-console
+  - name: system
+    plugs:
+      jupyter:
+        interface: tunnel
+        endpoint: 127.0.0.1:8989
+connections:
+  - plug: jupyter:venv
+    slot: uv:venv
+actions:
+  pull: ollama pull "$@"

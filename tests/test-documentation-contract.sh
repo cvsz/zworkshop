@@ -36,6 +36,8 @@ for file in \
     docs/architecture.md \
     docs/development.md \
     docs/release.md \
+    docs/tutorial.md \
+    examples/tutorial/README.md \
     .github/CODEOWNERS \
     .github/PULL_REQUEST_TEMPLATE.md \
     .github/ISSUE_TEMPLATE/config.yml \
@@ -43,7 +45,8 @@ for file in \
     .github/workflows/ci.yml \
     .github/workflows/codeql.yml \
     .github/workflows/dependency-review.yml \
-    .github/workflows/workshop-smoke.yml; do
+    .github/workflows/workshop-smoke.yml \
+    tests/test-tutorial-fixtures.sh; do
     test -f "$ROOT_DIR/$file" || fail "missing document: ${file}"
 done
 
@@ -53,6 +56,16 @@ assert_contains 'zworkshop' IMPLEMENTATION-CHECKLIST.md
 assert_contains 'Root Ubuntu Workshop automation' ROADMAP.md
 assert_contains 'Workshop trust boundary' SECURITY.md
 assert_contains 'workshop-automated-installer.sh' docs/architecture.md
+assert_contains 'sdkcraft-install' README.md
+assert_contains 'sdkcraft-refresh' README.md
+assert_contains '[tutorial integration guide](docs/tutorial.md)' README.md
+assert_contains '[definition-first fixtures](examples/tutorial/)' README.md
+assert_contains 'examples/tutorial/' README.md
+assert_contains 'Part 1: Get started' docs/tutorial.md
+assert_contains 'Part 2: Work with interfaces' docs/tutorial.md
+assert_contains 'Part 3: Sketch SDKs' docs/tutorial.md
+assert_contains 'Part 4: Craft SDKs' docs/tutorial.md
+assert_contains 'tests/test-tutorial-fixtures.sh' docs/development.md
 assert_contains 'make workshop-test' CONTRIBUTING.md
 assert_contains 'make workshop-smoke' .github/PULL_REQUEST_TEMPLATE.md
 assert_contains 'https://github.com/cvsz/zworkshop/security' .github/ISSUE_TEMPLATE/config.yml
@@ -62,6 +75,7 @@ assert_contains 'actions/workflows/workshop-smoke.yml/badge.svg?branch=main' REA
 assert_contains 'actions/workflows/codeql.yml/badge.svg?branch=main' README.md
 assert_contains 'img.shields.io/github/v/release/cvsz/zworkshop' README.md
 assert_contains "docs/**" .github/workflows/workshop-smoke.yml
+assert_contains "examples/**" .github/workflows/workshop-smoke.yml
 assert_contains 'actions/checkout@v7' .github/workflows/ci.yml
 assert_contains 'github/codeql-action/init@v4' .github/workflows/codeql.yml
 assert_contains 'actions/dependency-review-action@v5' .github/workflows/dependency-review.yml
