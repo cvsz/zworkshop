@@ -1,0 +1,20 @@
+# Copy this template to .github/workflows/workshop-smoke.yml in a repository
+# that contains this uws directory.
+name: Workshop wrapper smoke
+
+on:
+  push:
+    paths:
+      - 'uws/**'
+  pull_request:
+    paths:
+      - 'uws/**'
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Run non-mutating Workshop wrapper checks
+        run: bash uws/ci/workshop-smoke.sh
