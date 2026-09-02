@@ -8,6 +8,16 @@ The format is based on Keep a Changelog and projects are encouraged to follow Se
 
 ### Added
 
+### Changed
+
+### Fixed
+
+### Security
+
+## [0.1.0] - 2026-09-02
+
+### Added
+
 - Repository template baseline
 - Security and contribution policies
 - GitHub issue and pull request templates
