@@ -1,6 +1,6 @@
 # GitHub Release Workflow Design
 
-**Status:** Implemented; local gates verified; hosted verification pending (2026-09-02)
+**Status:** Implemented and verified (2026-09-02)
 
 ## Goal
 
@@ -178,3 +178,22 @@ tag policy, and no-artifact boundary stay visible.
   artifacts.
 - **Rollback ambiguity:** document release visibility and source-revert
   procedures separately from future artifact publishing.
+
+## Completion evidence
+
+- Implementation commit: `f134678f48254142336f96d1e43dbe5001a86e0f`.
+- Local commit signature: good GPG signature from key
+  `CD57FEA24696DC7E1DB25A8A220A4C8CCC7D2D50`.
+- Remote `main`: local `HEAD`, `origin/main`, and
+  `refs/heads/main` all resolved to the implementation commit.
+- GitHub commit verification: `verified: true`, `reason: valid`.
+- Local gates: `bash tests/test-release-workflow.sh`, `make ci`,
+  `make workshop-smoke`, and semantic GitHub YAML validation passed.
+- Hosted CI: [CI run](https://github.com/cvsz/zworkshop/actions/runs/33681965580)
+  succeeded for the exact implementation SHA.
+- Hosted Workshop smoke: [smoke run](https://github.com/cvsz/zworkshop/actions/runs/33681965628)
+  succeeded for the exact implementation SHA.
+- Hosted CodeQL: [CodeQL run](https://github.com/cvsz/zworkshop/actions/runs/33681965590)
+  succeeded for the exact implementation SHA.
+- Side-effect check: no release or version tag was created; the existing
+  `v0.1.0` release and remote tag remain unchanged.
