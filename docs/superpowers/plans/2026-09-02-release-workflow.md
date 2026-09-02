@@ -31,7 +31,7 @@
 - Consumes the repository-relative release workflow path.
 - Produces a dependency-light static contract that runs without GitHub access.
 
-- [ ] **Step 1: Write the failing static contract**
+- [x] **Step 1: Write the failing static contract**
 
 Create an executable Bash test with the following content:
 
@@ -98,7 +98,7 @@ assert_not_contains 'BEGIN PRIVATE KEY'
 printf 'release workflow contract PASS\n'
 ```
 
-- [ ] **Step 2: Run the test to verify the expected red failure**
+- [x] **Step 2: Run the test to verify the expected red failure**
 
 Run:
 
@@ -119,7 +119,7 @@ Expected result: failure with `missing release workflow`, because the workflow h
 - Consumes pushed `vMAJOR.MINOR.PATCH` tags and the existing `make ci` target.
 - Produces a GitHub Release only after the read-only validation job succeeds.
 
-- [ ] **Step 1: Add the exact workflow definition**
+- [x] **Step 1: Add the exact workflow definition**
 
 Create `.github/workflows/release.yml`:
 
@@ -198,7 +198,7 @@ The contract must also assert that the workflow-level permission is exactly
 that no other job has `contents: write`, and that
 `tests/test-release-workflow.sh` is included in the Makefile release gate.
 
-- [ ] **Step 2: Run the focused contract to verify green**
+- [x] **Step 2: Run the focused contract to verify green**
 
 Run:
 
@@ -218,32 +218,32 @@ Files:
 - Modify: `tests/test-documentation-contract.sh`
 - Modify: `tests/test-root-workshop-layout.sh`
 
-- [ ] **Step 1: Extend the local shell-file inventory**
+- [x] **Step 1: Extend the local shell-file inventory**
 
 Add `tests/test-release-workflow.sh` to the shell-file list in
 `workshop-automated-installer.sh` and to the `workshop-test` target in
 `Makefile`. Run it after the tutorial fixture contract so both the wrapper
 and the normal Make-based CI path validate the release workflow.
 
-- [ ] **Step 2: Extend CI required-file assertions**
+- [x] **Step 2: Extend CI required-file assertions**
 
 Add `.github/workflows/release.yml` and `tests/test-release-workflow.sh` to the
 required repository files checked by `.github/workflows/ci.yml`.
 
-- [ ] **Step 3: Extend the Workshop smoke path filters**
+- [x] **Step 3: Extend the Workshop smoke path filters**
 
 Add the same workflow and contract test to both the `push` and
 `pull_request` path lists in `.github/workflows/workshop-smoke.yml` while
 retaining the existing broad `.github/**` coverage.
 
-- [ ] **Step 4: Extend documentation and layout contracts**
+- [x] **Step 4: Extend documentation and layout contracts**
 
 Require the release workflow and its test from the documentation contract, and
 include them in the root layout contract's checked files. Assert the documented
 tag format, workflow location, and release command so the project documents
 cannot drift away from the executable contract.
 
-- [ ] **Step 5: Run the focused repository contracts**
+- [x] **Step 5: Run the focused repository contracts**
 
 Run:
 
@@ -270,7 +270,7 @@ Files:
 - Modify: `IMPLEMENTATION-CHECKLIST.md`
 - Modify: `docs/superpowers/specs/2026-09-02-release-workflow-design.md`
 
-- [ ] **Step 1: Document the operator-facing release path**
+- [x] **Step 1: Document the operator-facing release path**
 
 Document that a release is made by pushing a signed exact `vMAJOR.MINOR.PATCH`
 tag whose target is already on `main`. Explain that validation runs
@@ -278,7 +278,7 @@ read-only repository gates first, then the publish job creates a GitHub release
 with generated notes and no uploaded artifacts. State that the workflow does
 not create tags, publish packages, or use long-lived repository secrets.
 
-- [ ] **Step 2: Align contributor and security guidance**
+- [x] **Step 2: Align contributor and security guidance**
 
 Add the release workflow contract to contributor validation instructions, the
 pull-request checklist, and the security trust-boundary documentation. Clarify
@@ -286,20 +286,20 @@ that the publish job alone has `contents: write` and that release failures must
 be repaired by a new tag or a deliberate GitHub release correction rather than
 by automatic tag mutation.
 
-- [ ] **Step 3: Mark only implemented roadmap/checklist items**
+- [x] **Step 3: Mark only implemented roadmap/checklist items**
 
 Mark the tag-driven release workflow, semantic-version tag policy, generated
 release notes, and rollback documentation complete. Leave package publishing,
 artifact provenance, and other intentionally out-of-scope capabilities
 unchecked.
 
-- [ ] **Step 4: Record the implementation status in the approved spec**
+- [x] **Step 4: Record the implementation status in the approved spec**
 
 Change the spec status to implemented only after the workflow and local gates
 are in place. Reserve the completion-evidence section for the final signed
 commit, pushed branch, GitHub verification, and hosted run URLs.
 
-- [ ] **Step 5: Run documentation and formatting checks**
+- [x] **Step 5: Run documentation and formatting checks**
 
 Run:
 
@@ -322,7 +322,7 @@ Files:
 - Test: `ci/workshop-smoke.sh`
 - Test: `Makefile`
 
-- [ ] **Step 1: Run the full project gate**
+- [x] **Step 1: Run the full project gate**
 
 Run:
 
@@ -332,7 +332,7 @@ make ci
 
 Expected result: lint, all Workshop tests, build, and security checks pass.
 
-- [ ] **Step 2: Run the wrapper smoke gate**
+- [x] **Step 2: Run the wrapper smoke gate**
 
 Run:
 
@@ -343,7 +343,7 @@ make workshop-smoke
 Expected result: the wrapper's end-to-end smoke path passes with the release
 workflow present.
 
-- [ ] **Step 3: Review the complete diff and repository state**
+- [x] **Step 3: Review the complete diff and repository state**
 
 Run:
 
@@ -364,7 +364,7 @@ Files:
 - Update the approved spec with completion evidence after the implementation
   commit and hosted verification.
 
-- [ ] **Step 1: Synchronize before committing**
+- [x] **Step 1: Synchronize before committing**
 
 Run:
 
@@ -377,7 +377,7 @@ git rev-parse HEAD origin/main
 If `main` advanced, integrate it with a non-destructive fast-forward or
 rebase before staging. Preserve unrelated changes.
 
-- [ ] **Step 2: Create the signed implementation commit**
+- [x] **Step 2: Create the signed implementation commit**
 
 Stage only the planned files, inspect the staged diff, and run:
 
@@ -389,7 +389,7 @@ git commit --gpg-sign=220A4C8CCC7D2D50 -m "feat: add tag-driven GitHub releases"
 Verify the local commit signature with `git log --show-signature -1` and
 `git show --format=fuller --stat HEAD`.
 
-- [ ] **Step 3: Push and verify the exact remote commit**
+- [x] **Step 3: Push and verify the exact remote commit**
 
 Run:
 
@@ -402,7 +402,7 @@ git ls-remote origin refs/heads/main
 
 Confirm local `HEAD`, `origin/main`, and the remote branch SHA are identical.
 
-- [ ] **Step 4: Verify GitHub signature and required hosted checks**
+- [x] **Step 4: Verify GitHub signature and required hosted checks**
 
 Using the configured `gh` session without the invalid `GITHUB_TOKEN`
 environment override, query the pushed commit and runs:
@@ -417,7 +417,7 @@ confirm CI, Workshop smoke, and CodeQL succeed for the exact SHA. Confirm the
 release workflow did not run on the branch push and that no new release or tag
 was created by this implementation commit.
 
-- [ ] **Step 5: Record final evidence in the spec and commit it**
+- [x] **Step 5: Record final evidence in the spec and commit it**
 
 Append the final commit SHA, signature result, remote SHA equality, local gate
 results, hosted run URLs, and the no-release-side-effect check to the approved
