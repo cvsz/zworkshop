@@ -9,6 +9,15 @@ on:
       - 'tests/**'
       - 'ci/**'
       - 'Makefile'
+      - 'README.md'
+      - 'ABOUT.md'
+      - 'CONTRIBUTING.md'
+      - 'CHANGELOG.md'
+      - 'IMPLEMENTATION-CHECKLIST.md'
+      - 'ROADMAP.md'
+      - 'SECURITY.md'
+      - 'docs/**'
+      - '.github/**'
       - '.github/workflows/workshop-smoke.yml'
   pull_request:
     paths:
@@ -16,6 +25,15 @@ on:
       - 'tests/**'
       - 'ci/**'
       - 'Makefile'
+      - 'README.md'
+      - 'ABOUT.md'
+      - 'CONTRIBUTING.md'
+      - 'CHANGELOG.md'
+      - 'IMPLEMENTATION-CHECKLIST.md'
+      - 'ROADMAP.md'
+      - 'SECURITY.md'
+      - 'docs/**'
+      - '.github/**'
       - '.github/workflows/workshop-smoke.yml'
 
 permissions:

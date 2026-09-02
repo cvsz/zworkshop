@@ -1067,6 +1067,7 @@ cmd_ci() {
     local -a shell_files=(
         "$SCRIPT_PATH"
         "$SCRIPT_DIR/tests/test-root-workshop-layout.sh"
+        "$SCRIPT_DIR/tests/test-documentation-contract.sh"
         "$SCRIPT_DIR/tests/test-workshop-automated-installer.sh"
         "$SCRIPT_DIR/ci/workshop-smoke.sh"
     )
@@ -1088,6 +1089,9 @@ cmd_ci() {
     "$SCRIPT_PATH" --dry-run --project-dir "$SCRIPT_DIR/.ci-dry-run" init >/dev/null
     if [[ -f "$SCRIPT_DIR/tests/test-root-workshop-layout.sh" ]]; then
         bash "$SCRIPT_DIR/tests/test-root-workshop-layout.sh"
+    fi
+    if [[ -f "$SCRIPT_DIR/tests/test-documentation-contract.sh" ]]; then
+        bash "$SCRIPT_DIR/tests/test-documentation-contract.sh"
     fi
     if [[ -f "$SCRIPT_DIR/tests/test-workshop-automated-installer.sh" ]]; then
         bash "$SCRIPT_DIR/tests/test-workshop-automated-installer.sh"

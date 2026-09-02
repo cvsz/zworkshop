@@ -1,6 +1,13 @@
-# Workshop Full Wrapper Implementation Plan
+# Workshop Full Wrapper Completion Record
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+**Status:** Complete (2026-09-02)
+
+The planned root-native Ubuntu Workshop wrapper, fake-backend test harness,
+non-mutating smoke checks, and supporting documentation were implemented and
+validated. The checklist below is retained as an implementation record.
+
+> Historical implementation plan retained for traceability. Completed steps use
+> checkbox (`- [x]`) syntax.
 
 **Goal:** Turn `workshop-automated-installer.sh` into a safe, configurable wrapper for installation, bootstrap, Workshop lifecycle, interfaces, SDKs, sketches, diagnostics, JSON output, completion, and CI smoke checks.
 
@@ -33,12 +40,12 @@
 - Produces executable assertions for install/refresh selection, init, dispatch,
   JSON, dry-run, and safety behavior.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
   Add a shell test that first asserts the new `init`, `bootstrap`, `doctor`,
   `completion`, `sdk`, and `native` command behaviors against fake commands.
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
   Run `bash tests/test-workshop-automated-installer.sh` from the repository root.
 
@@ -58,33 +65,33 @@
   `exec`, `shell`, `run`, `ollama`, interface commands, SDK/sketch commands,
   `native`, `doctor`, `completion`, and `ci`.
 
-- [ ] **Step 1: Implement configuration and argument parsing**
+- [x] **Step 1: Implement configuration and argument parsing**
 
   Apply environment defaults, parse an optional allow-listed config file, then
   let command-line options override config values. Preserve no-argument
   backward compatibility by treating no command as `install`.
 
-- [ ] **Step 2: Implement project bootstrap**
+- [x] **Step 2: Implement project bootstrap**
 
   Add `init` and `bootstrap`; create the project directory when needed, refuse
   an existing definition, optionally run `git init`, call `workshop init`, add
   `.workshop.lock` idempotently to `.gitignore`, and optionally add the
   documented Ollama `pull` action when Ollama is selected.
 
-- [ ] **Step 3: Implement native command routing**
+- [x] **Step 3: Implement native command routing**
 
   Route lifecycle, execution, interface, sketch, SDK, SDKcraft, and raw native
   commands through the selected project directory. Preserve exact positional
   arguments and support repeated `--workshop` targets where native Workshop
   accepts multiple names.
 
-- [ ] **Step 4: Implement safety and observability**
+- [x] **Step 4: Implement safety and observability**
 
   Add destructive-command confirmation, JSON envelopes for query commands,
   `doctor`, completion output for Bash/Zsh/Fish/PowerShell, and a non-mutating
   `ci` smoke command.
 
-- [ ] **Step 5: Run the failing test and make it pass**
+- [x] **Step 5: Run the failing test and make it pass**
 
   Run `bash tests/test-workshop-automated-installer.sh` and fix only the
   implementation until it reports `PASS`.
@@ -104,12 +111,12 @@
 - `.github/workflows/workshop-smoke.yml` is the repository's root-native smoke
   workflow.
 
-- [ ] **Step 1: Write the smoke script and README examples**
+- [x] **Step 1: Write the smoke script and README examples**
 
   Keep CI checks non-mutating by default; require an explicit environment
   variable before any future live Workshop job is added.
 
-- [ ] **Step 2: Run the smoke script**
+- [x] **Step 2: Run the smoke script**
 
   Run `bash ci/workshop-smoke.sh` from the repository root.
 
@@ -121,11 +128,11 @@
 **Files:**
 - Verify: `workshop-automated-installer.sh`, `tests/test-workshop-automated-installer.sh`, `ci/workshop-smoke.sh`, `README.md`
 
-- [ ] **Step 1: Run full local verification**
+- [x] **Step 1: Run full local verification**
 
   Run `bash ci/workshop-smoke.sh` and `shellcheck --shell=bash workshop-automated-installer.sh tests/test-workshop-automated-installer.sh ci/workshop-smoke.sh` when ShellCheck is available.
 
-- [ ] **Step 2: Inspect final scope**
+- [x] **Step 2: Inspect final scope**
 
   Confirm the entrypoint is executable, no real snap installation was invoked,
   and no command path automatically runs `lxd init`, removes data, or writes

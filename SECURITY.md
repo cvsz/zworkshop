@@ -24,6 +24,28 @@ Each generated project should replace this section with its real support policy 
 - Review third-party actions and pin or constrain them according to project policy.
 - Do not disable security gates merely to obtain a passing build.
 
+## Workshop trust boundary and safety model
+
+The root Workshop wrapper is intentionally an operator-controlled boundary:
+
+- Installation is limited to the LXD and Workshop snaps; `lxd init` is never
+  run automatically, so storage and networking choices remain explicit.
+- `--dry-run` and `--plan` do not install snaps, create projects, or invoke
+  native Workshop state changes.
+- Existing `.workshop/<name>.yaml` definitions are never overwritten, and
+  `remove`/sketch deletion require `--yes` or interactive confirmation.
+- `.workshop.lock` is runtime state and is ignored; `.workshop/` definitions
+  may be reviewed and version-controlled. Do not commit runtime data,
+  credentials, model caches, or private keys.
+- GPU, mounts, networking, and other interfaces are exposed only through
+  explicit commands. CI uses fake executables and temporary directories and
+  does not mutate host snap/LXD state.
+
+The GitHub workflows use read-only repository permissions for validation and
+security jobs. Third-party action versions are reviewed and currently use
+`actions/checkout@v7`, `github/codeql-action@v4`, and
+`actions/dependency-review-action@v5`.
+
 ## Incident handling
 
 Projects generated from this template should document containment, remediation, validation, disclosure, and rollback procedures appropriate to their risk profile.

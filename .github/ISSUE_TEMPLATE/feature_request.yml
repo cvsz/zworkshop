@@ -27,3 +27,8 @@ body:
     attributes:
       label: Acceptance criteria
       description: What would make this feature complete?
+  - type: textarea
+    id: project_area
+    attributes:
+      label: Project area
+      description: Which root files, Workshop commands, CI workflows, or documents would this affect?

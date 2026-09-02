@@ -27,6 +27,19 @@ Confirm that the smoke checks use only temporary fake commands, that no
 `.workshop.lock` runtime file is staged, and that any live snap/LXD operation
 was performed separately with explicit operator approval.
 
+## GitHub publication
+
+Synchronize with `origin/main` before creating a release commit. Use the local
+GPG agent for signing, verify the commit with `git verify-commit`, and confirm
+that the pushed SHA matches both `origin/main` and the GitHub commit
+verification result. Do not place passphrases or tokens in commands, files, or
+release notes.
+
+The repository's validation workflows currently use `actions/checkout@v7`,
+`github/codeql-action@v4`, and `actions/dependency-review-action@v5`. Confirm
+hosted CI and security workflows are green for the exact release commit before
+tagging or publishing artifacts.
+
 ## Rollback
 
 Document how to restore the last known-good version, revert migrations safely, invalidate compromised artifacts, and communicate operational impact.

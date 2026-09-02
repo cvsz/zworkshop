@@ -1,6 +1,6 @@
 # Roadmap
 
-This template is intended to stay generic while providing production-grade repository foundations.
+This template stays reusable while providing production-grade repository foundations and a root-native Ubuntu Workshop automation baseline.
 
 ## Foundation
 
@@ -9,9 +9,12 @@ This template is intended to stay generic while providing production-grade repos
 - [x] Issue and pull request templates
 - [x] CI and security workflow baseline
 - [x] Dependabot configuration
-- [x] Release workflow
+- [ ] Release workflow
 - [x] Docker and task-runner placeholders
 - [x] Architecture and development documentation structure
+- [x] Root Ubuntu Workshop automation, installer, and non-mutating smoke checks
+- [x] Project and GitHub documentation for Workshop operation
+- [x] Current GitHub Actions major versions
 
 ## Future optional modules
 

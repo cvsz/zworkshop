@@ -36,6 +36,7 @@ jobs:
             .github/dependabot.yml
             workshop-automated-installer.sh
             tests/test-root-workshop-layout.sh
+            tests/test-documentation-contract.sh
             tests/test-workshop-automated-installer.sh
             ci/workshop-smoke.sh
             .github/workflows/workshop-smoke.yml

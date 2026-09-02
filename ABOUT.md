@@ -14,6 +14,7 @@
 - Media, streaming, multimodal, speech, image, OCR, and search systems
 - Gaming and interactive application infrastructure
 - OpenAPI tooling and service integration
+- Ubuntu Workshop development environments and safe CLI automation
 
 ## Current engineering interests
 
@@ -81,6 +82,20 @@ Projects should aim to be:
 - friendly to incremental improvement
 
 Security and quality checks should be fixed rather than bypassed. Infrastructure, CI, documentation, and operational readiness are treated as part of the product rather than afterthoughts.
+
+## Repository-specific baseline
+
+This repository includes a root-native `workshop-automated-installer.sh` for
+Ubuntu Workshop. The wrapper covers installation, project initialization,
+Workshop lifecycle and execution, interfaces, SDKs, sketches, diagnostics,
+completion, JSON output, and non-mutating CI checks.
+
+The repository keeps the Workshop boundary explicit: `--dry-run` and `--plan`
+do not mutate the host, `lxd init` is never run automatically, destructive
+operations require confirmation, `.workshop.lock` is ignored, and `.workshop/`
+definitions remain available for version control. Local and GitHub checks use
+fake commands and temporary directories instead of installing or starting
+snap/LXD services.
 
 ## Public project themes
 

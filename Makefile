@@ -18,6 +18,7 @@ test: workshop-test
 
 workshop-test:
 	@bash tests/test-root-workshop-layout.sh
+	@bash tests/test-documentation-contract.sh
 	@bash tests/test-workshop-automated-installer.sh
 
 workshop-smoke:

@@ -1,5 +1,10 @@
-# Replace or extend ownership rules for generated repositories.
+# Root and generated-project ownership for zworkshop.
 * @cvsz
 
 /.github/ @cvsz
 /SECURITY.md @cvsz
+/workshop-automated-installer.sh @cvsz
+/tests/ @cvsz
+/ci/ @cvsz
+/docs/ @cvsz
+/README.md @cvsz

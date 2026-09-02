@@ -6,12 +6,12 @@ A production-ready, reusable GitHub repository template with a root-native Ubunt
 
 - Issue and pull request templates
 - CODEOWNERS and repository contribution guidance
-- Security policy and support policy
+- Security and conduct policies
 - CI workflow baseline
 - CodeQL security scanning
 - Dependency Review for pull requests
 - Dependabot configuration
-- Release workflow and release notes configuration
+- Release documentation and changelog structure
 - Conventional commit / PR guidance
 - EditorConfig, Git attributes, and Git ignore baseline
 - Community health files
@@ -38,12 +38,13 @@ A production-ready, reusable GitHub repository template with a root-native Ubunt
 .github/
   ISSUE_TEMPLATE/
   workflows/
+    ci.yml
+    codeql.yml
+    dependency-review.yml
+    workshop-smoke.yml
   CODEOWNERS
-  CONTRIBUTING.md
   PULL_REQUEST_TEMPLATE.md
   dependabot.yml
-  release.yml
-  SUPPORT.md
 docs/
   adr/
   architecture.md
@@ -52,6 +53,7 @@ docs/
 ci/
   workshop-smoke.sh
 tests/
+  test-documentation-contract.sh
   test-root-workshop-layout.sh
   test-workshop-automated-installer.sh
 .env.example

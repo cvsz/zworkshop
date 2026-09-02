@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for contributing to projects created from this template.
+Thanks for contributing to zworkshop and projects created from this template.
 
 ## Development workflow
 
@@ -10,6 +10,19 @@ Thanks for contributing to projects created from this template.
 4. Run the repository's formatting, linting, test, build, and security checks.
 5. Update documentation and `CHANGELOG.md` when relevant.
 6. Open a pull request and complete the checklist.
+
+## Ubuntu Workshop validation
+
+Changes to the root Workshop automation must keep the non-mutating gates green:
+
+```bash
+make workshop-test
+make workshop-smoke
+```
+
+Use `./workshop-automated-installer.sh --dry-run ...` when reviewing installer
+arguments. Do not use the test harness to install snaps, initialize LXD, or
+create runtime state in the repository.
 
 ## Branch naming
 
@@ -23,6 +36,10 @@ Prefer Conventional Commits, for example:
 - `fix: handle empty configuration`
 - `security: harden token validation`
 - `docs: update deployment guide`
+
+Use the repository's configured GPG agent for signed commits when signing is
+required. Never put passphrases, tokens, or private keys in commits, issues, or
+pull requests.
 
 ## Pull requests
 
