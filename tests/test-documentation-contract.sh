@@ -57,6 +57,10 @@ assert_contains 'make workshop-test' CONTRIBUTING.md
 assert_contains 'make workshop-smoke' .github/PULL_REQUEST_TEMPLATE.md
 assert_contains 'https://github.com/cvsz/zworkshop/security' .github/ISSUE_TEMPLATE/config.yml
 assert_contains 'workshop-smoke.yml' README.md
+assert_contains 'actions/workflows/ci.yml/badge.svg?branch=main' README.md
+assert_contains 'actions/workflows/workshop-smoke.yml/badge.svg?branch=main' README.md
+assert_contains 'actions/workflows/codeql.yml/badge.svg?branch=main' README.md
+assert_contains 'img.shields.io/github/v/release/cvsz/zworkshop' README.md
 assert_contains "docs/**" .github/workflows/workshop-smoke.yml
 assert_contains 'actions/checkout@v7' .github/workflows/ci.yml
 assert_contains 'github/codeql-action/init@v4' .github/workflows/codeql.yml

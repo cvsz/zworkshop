@@ -2,6 +2,11 @@
 
 A production-ready, reusable GitHub repository template with a root-native Ubuntu Workshop automation workflow and consistent engineering, security, documentation, automation, and release practices.
 
+[![CI](https://github.com/cvsz/zworkshop/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/cvsz/zworkshop/actions/workflows/ci.yml)
+[![Workshop wrapper smoke](https://github.com/cvsz/zworkshop/actions/workflows/workshop-smoke.yml/badge.svg?branch=main)](https://github.com/cvsz/zworkshop/actions/workflows/workshop-smoke.yml)
+[![CodeQL](https://github.com/cvsz/zworkshop/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/cvsz/zworkshop/actions/workflows/codeql.yml)
+[![Latest release](https://img.shields.io/github/v/release/cvsz/zworkshop?display_name=tag)](https://github.com/cvsz/zworkshop/releases)
+
 ## Included
 
 - Issue and pull request templates

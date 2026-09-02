@@ -8,6 +8,8 @@ The format is based on Keep a Changelog and projects are encouraged to follow Se
 
 ### Added
 
+- README status badges for CI, Workshop smoke, CodeQL, and the latest release.
+
 ### Changed
 
 ### Fixed
