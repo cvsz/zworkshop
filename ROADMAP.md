@@ -9,7 +9,7 @@ This template stays reusable while providing production-grade repository foundat
 - [x] Issue and pull request templates
 - [x] CI and security workflow baseline
 - [x] Dependabot configuration
-- [ ] Release workflow
+- [x] Tag-driven GitHub release workflow with generated notes
 - [x] Docker and task-runner placeholders
 - [x] Architecture and development documentation structure
 - [x] Root Ubuntu Workshop automation, installer, and non-mutating smoke checks

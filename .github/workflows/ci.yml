@@ -49,8 +49,10 @@ jobs:
             tests/test-root-workshop-layout.sh
             tests/test-documentation-contract.sh
             tests/test-tutorial-fixtures.sh
+            tests/test-release-workflow.sh
             tests/test-workshop-automated-installer.sh
             ci/workshop-smoke.sh
+            .github/workflows/release.yml
             .github/workflows/workshop-smoke.yml
           )
           for path in "${required[@]}"; do

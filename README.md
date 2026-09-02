@@ -5,6 +5,7 @@ A production-ready, reusable GitHub repository template with a root-native Ubunt
 [![CI](https://github.com/cvsz/zworkshop/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/cvsz/zworkshop/actions/workflows/ci.yml)
 [![Workshop wrapper smoke](https://github.com/cvsz/zworkshop/actions/workflows/workshop-smoke.yml/badge.svg?branch=main)](https://github.com/cvsz/zworkshop/actions/workflows/workshop-smoke.yml)
 [![CodeQL](https://github.com/cvsz/zworkshop/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/cvsz/zworkshop/actions/workflows/codeql.yml)
+[![Release workflow](https://github.com/cvsz/zworkshop/actions/workflows/release.yml/badge.svg)](https://github.com/cvsz/zworkshop/actions/workflows/release.yml)
 [![Latest release](https://img.shields.io/github/v/release/cvsz/zworkshop?display_name=tag)](https://github.com/cvsz/zworkshop/releases)
 
 ## Included
@@ -16,7 +17,7 @@ A production-ready, reusable GitHub repository template with a root-native Ubunt
 - CodeQL security scanning
 - Dependency Review for pull requests
 - Dependabot configuration
-- Release documentation and changelog structure
+- Tag-driven GitHub release workflow, release documentation, and changelog structure
 - Conventional commit / PR guidance
 - EditorConfig, Git attributes, and Git ignore baseline
 - Community health files
@@ -47,6 +48,7 @@ A production-ready, reusable GitHub repository template with a root-native Ubunt
     ci.yml
     codeql.yml
     dependency-review.yml
+    release.yml
     workshop-smoke.yml
   CODEOWNERS
   PULL_REQUEST_TEMPLATE.md
@@ -66,6 +68,7 @@ ci/
   workshop-smoke.sh
 tests/
   test-documentation-contract.sh
+  test-release-workflow.sh
   test-root-workshop-layout.sh
   test-tutorial-fixtures.sh
   test-workshop-automated-installer.sh
@@ -203,6 +206,16 @@ Run the repository's non-mutating checks with:
 ```bash
 bash ci/workshop-smoke.sh
 ```
+
+### Releases
+
+The repository's [release workflow](.github/workflows/release.yml) listens
+only for an explicitly pushed exact `vMAJOR.MINOR.PATCH` tag. It validates the
+tag target and `main` ancestry, runs `make ci`, and then creates a GitHub
+Release with generated notes. It does not create tags, upload artifacts,
+publish packages, or use long-lived repository secrets. See
+[`docs/release.md`](docs/release.md) for the signed-commit, tag, verification,
+and rollback procedure.
 
 ### Safety boundaries
 

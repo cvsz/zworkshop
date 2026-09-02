@@ -45,8 +45,10 @@ for file in \
     .github/workflows/ci.yml \
     .github/workflows/codeql.yml \
     .github/workflows/dependency-review.yml \
+    .github/workflows/release.yml \
     .github/workflows/workshop-smoke.yml \
-    tests/test-tutorial-fixtures.sh; do
+    tests/test-tutorial-fixtures.sh \
+    tests/test-release-workflow.sh; do
     test -f "$ROOT_DIR/$file" || fail "missing document: ${file}"
 done
 
@@ -66,10 +68,12 @@ assert_contains 'Part 2: Work with interfaces' docs/tutorial.md
 assert_contains 'Part 3: Sketch SDKs' docs/tutorial.md
 assert_contains 'Part 4: Craft SDKs' docs/tutorial.md
 assert_contains 'tests/test-tutorial-fixtures.sh' docs/development.md
+assert_contains 'tests/test-release-workflow.sh' docs/development.md
 assert_contains 'make workshop-test' CONTRIBUTING.md
 assert_contains 'make workshop-smoke' .github/PULL_REQUEST_TEMPLATE.md
 assert_contains 'https://github.com/cvsz/zworkshop/security' .github/ISSUE_TEMPLATE/config.yml
 assert_contains 'workshop-smoke.yml' README.md
+assert_contains '.github/workflows/release.yml' README.md
 assert_contains 'actions/workflows/ci.yml/badge.svg?branch=main' README.md
 assert_contains 'actions/workflows/workshop-smoke.yml/badge.svg?branch=main' README.md
 assert_contains 'actions/workflows/codeql.yml/badge.svg?branch=main' README.md
@@ -79,6 +83,10 @@ assert_contains "examples/**" .github/workflows/workshop-smoke.yml
 assert_contains 'actions/checkout@v7' .github/workflows/ci.yml
 assert_contains 'github/codeql-action/init@v4' .github/workflows/codeql.yml
 assert_contains 'actions/dependency-review-action@v5' .github/workflows/dependency-review.yml
+assert_contains 'vMAJOR.MINOR.PATCH' docs/release.md
+assert_contains 'gh release create' docs/release.md
+assert_contains 'no automatic artifact upload' docs/release.md
+assert_contains 'release.yml' .github/PULL_REQUEST_TEMPLATE.md
 
 assert_not_contains 'ztemplate' \
     README.md ABOUT.md CONTRIBUTING.md IMPLEMENTATION-CHECKLIST.md ROADMAP.md \
@@ -86,6 +94,5 @@ assert_not_contains 'ztemplate' \
     .github/CODEOWNERS .github/PULL_REQUEST_TEMPLATE.md \
     .github/ISSUE_TEMPLATE/config.yml .github/ISSUE_TEMPLATE/feature_request.yml
 assert_not_contains 'github.com/cvsz/ztemplate' .github/ISSUE_TEMPLATE/config.yml
-assert_not_contains 'release.yml' README.md
 
 printf 'documentation contract PASS\n'

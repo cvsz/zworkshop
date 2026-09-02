@@ -33,6 +33,22 @@ SDKcraft `try` and `test` are live operator workflows and may create build
 artifacts or LXD containers. SDK Store `login`, `register`, and `upload` must
 remain explicit and must never be added to CI.
 
+## Release workflow validation
+
+The release path is deliberately tag-driven. Before pushing a release tag,
+run the complete local gate and the static workflow contract:
+
+```bash
+make ci
+make workshop-smoke
+bash tests/test-release-workflow.sh
+```
+
+Only an exact `vMAJOR.MINOR.PATCH` tag whose target is already reachable from
+`main` should be pushed. The workflow creates the GitHub Release after its
+read-only validation job succeeds; it does not create tags, upload artifacts,
+publish packages, or log in to the SDK Store.
+
 ## Branch naming
 
 Use concise prefixes such as `feat/`, `fix/`, `docs/`, `chore/`, `refactor/`, `test/`, or `security/`.

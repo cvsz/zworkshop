@@ -20,6 +20,7 @@ on:
       - 'docs/tutorial.md'
       - 'examples/**'
       - '.github/**'
+      - '.github/workflows/release.yml'
       - '.github/workflows/workshop-smoke.yml'
   pull_request:
     paths:
@@ -38,6 +39,7 @@ on:
       - 'docs/tutorial.md'
       - 'examples/**'
       - '.github/**'
+      - '.github/workflows/release.yml'
       - '.github/workflows/workshop-smoke.yml'
 
 permissions:

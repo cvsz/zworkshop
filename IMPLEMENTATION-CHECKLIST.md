@@ -54,6 +54,7 @@ Use this checklist after creating a repository from `zworkshop`.
 
 - [ ] Customize CI for the selected stack.
 - [x] Keep the root Workshop smoke workflow enabled.
+- [x] Tag-driven GitHub release workflow validates exact version tags before publishing generated notes.
 - [ ] Pin runtime versions and define supported-version matrices.
 - [ ] Add build and package validation.
 - [ ] Add artifact retention settings where needed.
@@ -62,11 +63,11 @@ Use this checklist after creating a repository from `zworkshop`.
 
 ## Release
 
-- [ ] Decide on Semantic Versioning or another explicit versioning policy.
-- [ ] Configure changelog and release-note generation.
+- [x] Use exact `vMAJOR.MINOR.PATCH` tags as the release versioning policy.
+- [x] Configure generated GitHub release notes from the changelog/tag boundary.
 - [ ] Configure package/container publishing only when needed.
 - [ ] Add provenance, signing, and attestations for production artifacts where appropriate.
-- [ ] Document rollback procedures.
+- [x] Document rollback procedures for published GitHub releases and source reverts.
 
 ## Documentation
 

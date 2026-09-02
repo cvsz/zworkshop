@@ -26,9 +26,9 @@ make workshop-smoke
 ```
 
 `make workshop-test` includes the root layout, documentation contract, tutorial
-fixture contract, and fake-backend Workshop tests. `make ci` also runs the
-repository's placeholder format/build/security gates until a generated project
-replaces them with stack-specific commands.
+fixture contract, release workflow contract, and fake-backend Workshop tests.
+`make ci` also runs the repository's placeholder format/build/security gates
+until a generated project replaces them with stack-specific commands.
 
 The tests use temporary fake `snap`, `lxd`, `workshop`, SDK, SDKcraft, and
 privilege commands. They do not install snaps, start LXD, create a real
@@ -73,3 +73,12 @@ to an approved operator environment, not CI. `sdkcraft login`, `register`, and
 ## Documentation
 
 Update architecture, development, release, and ADR documentation when behavior or operational assumptions change.
+
+The release workflow contract is static and credential-free:
+
+```bash
+bash tests/test-release-workflow.sh
+```
+
+It checks the exact tag trigger, validation gate, least-privilege permissions,
+generated-notes command, and no-artifact boundary without contacting GitHub.

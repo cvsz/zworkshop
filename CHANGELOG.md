@@ -13,11 +13,14 @@ The format is based on Keep a Changelog and projects are encouraged to follow Se
   fixtures for the Workshop, in-project SDK, and SDKcraft workflows.
 - Explicit `sdkcraft-install` and `sdkcraft-refresh` wrapper commands plus
   project-directory routing for SDKcraft passthrough.
+- Conservative tag-driven GitHub release workflow with generated notes,
+  least-privilege publication, and no automatic artifact upload.
 
 ### Changed
 
 - Added tutorial fixture validation to the Makefile, CI baseline, and
   non-mutating Workshop smoke workflow.
+- Added the release workflow contract to local and hosted repository gates.
 
 ### Fixed
 

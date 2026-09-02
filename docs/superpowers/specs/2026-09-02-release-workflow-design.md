@@ -1,6 +1,6 @@
 # GitHub Release Workflow Design
 
-**Status:** Approved design; written specification ready for review (2026-09-02)
+**Status:** Implemented; local gates verified; hosted verification pending (2026-09-02)
 
 ## Goal
 

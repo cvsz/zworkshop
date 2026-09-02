@@ -1132,6 +1132,7 @@ cmd_ci() {
         "$SCRIPT_DIR/tests/test-root-workshop-layout.sh"
         "$SCRIPT_DIR/tests/test-documentation-contract.sh"
         "$SCRIPT_DIR/tests/test-tutorial-fixtures.sh"
+        "$SCRIPT_DIR/tests/test-release-workflow.sh"
         "$SCRIPT_DIR/tests/test-workshop-automated-installer.sh"
         "$SCRIPT_DIR/ci/workshop-smoke.sh"
     )
@@ -1159,6 +1160,9 @@ cmd_ci() {
     fi
     if [[ -f "$SCRIPT_DIR/tests/test-tutorial-fixtures.sh" ]]; then
         bash "$SCRIPT_DIR/tests/test-tutorial-fixtures.sh"
+    fi
+    if [[ -f "$SCRIPT_DIR/tests/test-release-workflow.sh" ]]; then
+        bash "$SCRIPT_DIR/tests/test-release-workflow.sh"
     fi
     if [[ -f "$SCRIPT_DIR/tests/test-workshop-automated-installer.sh" ]]; then
         bash "$SCRIPT_DIR/tests/test-workshop-automated-installer.sh"

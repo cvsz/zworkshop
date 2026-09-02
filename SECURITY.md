@@ -56,6 +56,20 @@ security jobs. Third-party action versions are reviewed and currently use
 `actions/checkout@v7`, `github/codeql-action@v4`, and
 `actions/dependency-review-action@v5`.
 
+## Release workflow trust boundary
+
+`.github/workflows/release.yml` has two explicit jobs:
+
+- `validate` has `contents: read`, checks the exact
+  `vMAJOR.MINOR.PATCH` tag target and `main` ancestry, and runs `make ci`.
+- `publish` needs `validate` and is the only job with `contents: write`; it
+  uses the GitHub-provided token to create the release with generated notes.
+
+The workflow does not receive long-lived repository secrets, import private
+keys, create or push tags, upload artifacts, publish packages, or perform SDK
+Store operations. A release tag is an explicit operator action, and a failed
+validation job prevents publication.
+
 ## Incident handling
 
 Projects generated from this template should document containment, remediation, validation, disclosure, and rollback procedures appropriate to their risk profile.

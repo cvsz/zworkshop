@@ -102,6 +102,11 @@ snap/LXD services. The tutorial fixtures contain no credentials, packed SDK
 artifacts, model caches, or runtime locks; SDK Store login, registration, and
 upload remain explicit operator actions.
 
+The repository also includes a conservative tag-driven GitHub release workflow.
+Only exact `vMAJOR.MINOR.PATCH` tags trigger it; validation has read-only
+permissions, publication is gated on `make ci`, and no artifacts or SDK Store
+content are uploaded automatically.
+
 ## Public project themes
 
 The `cvsz` GitHub portfolio spans a broad collection of repositories covering areas such as:
