@@ -47,3 +47,6 @@ logs/
 # Local runtime data
 .tmp/
 tmp/
+
+# Ubuntu Workshop runtime state
+.workshop.lock

@@ -1,0 +1,32 @@
+# Root-native smoke workflow for the Workshop automation in this repository.
+name: Workshop wrapper smoke
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'workshop-automated-installer.sh'
+      - 'tests/**'
+      - 'ci/**'
+      - 'Makefile'
+      - '.github/workflows/workshop-smoke.yml'
+  pull_request:
+    paths:
+      - 'workshop-automated-installer.sh'
+      - 'tests/**'
+      - 'ci/**'
+      - 'Makefile'
+      - '.github/workflows/workshop-smoke.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Run non-mutating Workshop wrapper checks
+        shell: bash
+        run: bash ci/workshop-smoke.sh

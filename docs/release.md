@@ -14,6 +14,19 @@ Use an explicit versioning policy. Semantic Versioning is recommended for reusab
 6. Publish artifacts only from trusted workflows.
 7. Verify the release after publication.
 
+## Workshop artifact gate
+
+Before publishing a change to the root Workshop automation, run:
+
+```bash
+make workshop-test
+make workshop-smoke
+```
+
+Confirm that the smoke checks use only temporary fake commands, that no
+`.workshop.lock` runtime file is staged, and that any live snap/LXD operation
+was performed separately with explicit operator approval.
+
 ## Rollback
 
 Document how to restore the last known-good version, revert migrations safely, invalidate compromised artifacts, and communicate operational impact.

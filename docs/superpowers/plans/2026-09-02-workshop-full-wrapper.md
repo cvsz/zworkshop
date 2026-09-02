@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Turn `uws/workshop-automated-installer.sh` into a safe, configurable wrapper for installation, bootstrap, Workshop lifecycle, interfaces, SDKs, sketches, diagnostics, JSON output, completion, and CI smoke checks.
+**Goal:** Turn `workshop-automated-installer.sh` into a safe, configurable wrapper for installation, bootstrap, Workshop lifecycle, interfaces, SDKs, sketches, diagnostics, JSON output, completion, and CI smoke checks.
 
 **Architecture:** Keep one Bash entrypoint with explicit subcommand dispatch. Installation and filesystem setup are implemented locally; Workshop, SDK, SDKcraft, and workshopctl state remains owned by their native CLIs. Query commands optionally capture native output into a JSON envelope, while mutating and interactive commands retain human-readable output and explicit safety gates.
 
@@ -40,7 +40,7 @@
 
 - [ ] **Step 2: Run the test to verify it fails**
 
-  Run `bash tests/test-workshop-automated-installer.sh` from `uws`.
+  Run `bash tests/test-workshop-automated-installer.sh` from the repository root.
 
   Expected: FAIL because the existing install-only script does not implement
   the new command surface.
@@ -92,17 +92,17 @@
 ### Task 3: Document and expose CI usage
 
 **Files:**
-- Create: `README.md`
-- Create: `ci/workshop-smoke.sh`
-- Create: `ci/github-actions-workshop-smoke.yml`
+- Modify: `README.md`
+- Modify: `ci/workshop-smoke.sh`
+- Modify: `.github/workflows/workshop-smoke.yml`
 
 **Interfaces:**
 - README documents the global options, defaults, safety boundaries, and native
   command examples.
 - `ci/workshop-smoke.sh` invokes the local test harness and static checks with
   no live installation.
-- `ci/github-actions-workshop-smoke.yml` is a copyable workflow template for a
-  repository containing the `uws` directory.
+- `.github/workflows/workshop-smoke.yml` is the repository's root-native smoke
+  workflow.
 
 - [ ] **Step 1: Write the smoke script and README examples**
 
@@ -111,7 +111,7 @@
 
 - [ ] **Step 2: Run the smoke script**
 
-  Run `bash ci/workshop-smoke.sh` from `uws`.
+  Run `bash ci/workshop-smoke.sh` from the repository root.
 
   Expected: syntax, ShellCheck when installed, help, dry-run, and fake-command
   tests pass.
@@ -129,4 +129,4 @@
 
   Confirm the entrypoint is executable, no real snap installation was invoked,
   and no command path automatically runs `lxd init`, removes data, or writes
-  outside the requested `uws` directory and test temporary directories.
+  outside the repository and test temporary directories.

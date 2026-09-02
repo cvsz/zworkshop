@@ -8,6 +8,27 @@
 4. Replace placeholder `Makefile` targets with real project commands.
 5. Run formatting, linting, tests, build, and security checks before opening a pull request.
 
+## Ubuntu Workshop checks
+
+The repository-root `workshop-automated-installer.sh` wraps the documented
+Ubuntu Workshop lifecycle without automatically running `lxd init` or changing
+host storage and networking. Use dry-run mode while reviewing commands:
+
+```bash
+./workshop-automated-installer.sh --dry-run bootstrap
+```
+
+Run the fake-backend test harness and the complete non-mutating smoke check:
+
+```bash
+make workshop-test
+make workshop-smoke
+```
+
+The tests use temporary fake `snap`, `lxd`, `workshop`, SDK, and privilege
+commands. They do not install snaps, start LXD, or create a real Workshop
+definition in this repository.
+
 ## Quality expectations
 
 - Keep changes small and reviewable.

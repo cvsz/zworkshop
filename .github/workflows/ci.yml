@@ -34,6 +34,11 @@ jobs:
             IMPLEMENTATION-CHECKLIST.md
             .github/PULL_REQUEST_TEMPLATE.md
             .github/dependabot.yml
+            workshop-automated-installer.sh
+            tests/test-root-workshop-layout.sh
+            tests/test-workshop-automated-installer.sh
+            ci/workshop-smoke.sh
+            .github/workflows/workshop-smoke.yml
           )
           for path in "${required[@]}"; do
             test -f "$path" || { echo "Missing required file: $path"; exit 1; }
@@ -52,3 +57,7 @@ jobs:
         shell: bash
         run: |
           ruby -e 'require "yaml"; Dir.glob(".github/**/*.{yml,yaml}").each { |f| YAML.load_file(f); puts "ok #{f}" }'
+
+      - name: Run Workshop wrapper smoke checks
+        shell: bash
+        run: bash ci/workshop-smoke.sh

@@ -15,8 +15,8 @@ The wrapper will cover:
 - Workshop lifecycle, execution, interface, change/task, and sketch commands.
 - SDK, SDKcraft, and raw native CLI passthrough.
 - Safe dry-run/plan output, configuration-file support, JSON command envelopes,
-  diagnostics, shell completion output, local CI smoke checks, and a GitHub
-  Actions workflow template.
+  diagnostics, shell completion output, local CI smoke checks, and the
+  repository's root GitHub Actions workflow.
 
 ## Defaults
 

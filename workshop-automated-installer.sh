@@ -100,7 +100,7 @@ Examples:
   ${SCRIPT_NAME} --project-dir ./my-project bootstrap
   ${SCRIPT_NAME} --project-dir ./my-project --workshop dev exec -- ls /project
   ${SCRIPT_NAME} --project-dir ./my-project --json status
-  ${SCRIPT_NAME} completion bash > ~/.local/share/bash-completion/uws
+  ${SCRIPT_NAME} completion bash > ~/.local/share/bash-completion/workshop-automated-installer
 
 Configuration keys:
   UWS_PROJECT_DIR UWS_WORKSHOP_NAME UWS_BASE UWS_SDKS UWS_MODEL
@@ -1064,6 +1064,7 @@ cmd_ci() {
     local shell_file
     local -a shell_files=(
         "$SCRIPT_PATH"
+        "$SCRIPT_DIR/tests/test-root-workshop-layout.sh"
         "$SCRIPT_DIR/tests/test-workshop-automated-installer.sh"
         "$SCRIPT_DIR/ci/workshop-smoke.sh"
     )
@@ -1083,6 +1084,9 @@ cmd_ci() {
 
     "$SCRIPT_PATH" --help >/dev/null
     "$SCRIPT_PATH" --dry-run --project-dir "$SCRIPT_DIR/.ci-dry-run" init >/dev/null
+    if [[ -f "$SCRIPT_DIR/tests/test-root-workshop-layout.sh" ]]; then
+        bash "$SCRIPT_DIR/tests/test-root-workshop-layout.sh"
+    fi
     if [[ -f "$SCRIPT_DIR/tests/test-workshop-automated-installer.sh" ]]; then
         bash "$SCRIPT_DIR/tests/test-workshop-automated-installer.sh"
     fi
