@@ -47,7 +47,9 @@ die() {
     exit 1
 }
 
-# shellcheck disable=SC2329
+# The ERR trap invokes this handler indirectly; newer ShellCheck versions
+# otherwise report the handler body as unreachable.
+# shellcheck disable=SC2317,SC2329
 on_error() {
     local status=$?
     log "Command failed with status ${status} at line ${BASH_LINENO[0]:-unknown}: ${BASH_COMMAND}"
