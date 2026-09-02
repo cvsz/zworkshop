@@ -1,6 +1,6 @@
 # Ubuntu Workshop Tutorial Integration Design
 
-**Status:** Implementation complete; local verification passed; hosted verification pending (2026-09-02)
+**Status:** Implemented and verified (2026-09-02)
 
 ## Goal
 
@@ -157,3 +157,19 @@ fake commands and temporary directories only.
   fixtures; document publish commands without tokens.
 - **Fixture misuse:** Label definitions as examples and require an operator to
   copy/customize them before launching a real Workshop.
+
+## Completion record
+
+The implementation was delivered in signed commit
+[`9200aa0`](https://github.com/cvsz/zworkshop/commit/9200aa0a4ec7fb554ebcfe5ff183ab9ffcb10de2)
+and pushed to `main`. Local verification covered Bash syntax, ShellCheck,
+PyYAML parsing, fixture safety, `make ci`, and the non-mutating smoke path.
+GitHub verified the commit signature and completed the hosted gates:
+
+- [CI run](https://github.com/cvsz/zworkshop/actions/runs/33676221204)
+- [Workshop wrapper smoke run](https://github.com/cvsz/zworkshop/actions/runs/33676221248)
+- [CodeQL run](https://github.com/cvsz/zworkshop/actions/runs/33676221205)
+
+The hosted gates validate repository content and fake-command behavior only;
+live snap, LXD, Workshop, GPU, Jupyter, Ollama, SDKcraft, and SDK Store
+validation remain separate operator-approved activities.

@@ -295,11 +295,11 @@ git diff --check
 
 Verify no uws/, .ci-dry-run, .workshop.lock, .workshop/, packed SDK, credential, or secret-bearing artifact exists in the repository.
 
-- [ ] Step 2: Inspect and stage only the integration
+- [x] Step 2: Inspect and stage only the integration
 
 Run git status --short, git diff --stat, and git diff --cached --name-status after staging only the files listed in this plan. Run git diff --cached --check before committing.
 
-- [ ] Step 3: Create and verify the signed commit
+- [x] Step 3: Create and verify the signed commit
 
 Fetch first, confirm origin/main has not advanced unexpectedly, then create a GPG-signed Conventional Commit with the configured identity and run:
 
@@ -308,10 +308,19 @@ git verify-commit HEAD
 git status --short --branch
 ~~~
 
-- [ ] Step 4: Push and verify remote state
+- [x] Step 4: Push and verify remote state
 
 Push only a fast-forward to origin/main, then verify git rev-parse HEAD, git rev-parse origin/main, git ls-remote origin refs/heads/main, and the GitHub commit verification API. If the remote advances, preserve its commits and rebase the local integration commit with GPG signing before pushing.
 
-- [ ] Step 5: Verify hosted checks for the exact SHA
+- [x] Step 5: Verify hosted checks for the exact SHA
 
 Monitor the CI, Workshop wrapper smoke, and CodeQL push runs for the final SHA with gh run watch --exit-status. Query all three final run conclusions and retain their URLs in the completion report. Do not claim completion with a failed or unverified hosted run.
+
+## Completion evidence
+
+The implementation commit `9200aa0a4ec7fb554ebcfe5ff183ab9ffcb10de2` is
+GPG-signed, pushed to `origin/main`, and verified by GitHub. Its hosted CI,
+Workshop wrapper smoke, and CodeQL runs all completed successfully. The
+approved spec records the evidence links and the remaining boundary: no live
+snap, LXD, Workshop, SDKcraft, GPU, or SDK Store operation was performed by
+repository validation.
